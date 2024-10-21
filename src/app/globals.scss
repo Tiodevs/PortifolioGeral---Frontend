@@ -1,11 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 :root {
-    --cinza: #C8C8C8;
+    --cinza: #C7C7C7;
     --cinza2: #c8c8c850;
     --preto: #000000;
-    --preto2: #000000;
-    --azul: #7121D7;
+    --preto2: #1A1A1A;
+    --main: #7121D7;
     --azul2:rgba(15, 99, 254, 0.351);
     --branco: #FFFFFF;
 }
@@ -15,21 +17,27 @@
     padding: 0;
     outline: 0;
     box-sizing: border-box;
-    font-family: "Lexend", sans-serif;
+    color: var(--branco);
+    font-family: "Manrope", sans-serif;
 }
-
 button {
     cursor: pointer;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: bolder;
 }
 
-a, p, h1, h2 {
+a {
+    color: inherited;
     text-decoration: none;
-    color: var(--branco);
+}
+
+h1{
+    font-family: "Bebas Neue", sans-serif;
 }
 
 body {
     background-color: var(--preto);
-    font-family: "Lexend", sans-serif;
+    font-family: "Manrope", sans-serif;
 }
 
 body,
@@ -37,6 +45,6 @@ input,
 textarea,
 select,
 button {
-    font-family: "Lexend", sans-serif;
+    font-family: "Manrope", sans-serif;
     font: 400 1rem sans-serif;
 }

@@ -2,55 +2,18 @@
 
 import Link from 'next/link'
 import styles from './styles.module.scss'
+import styless from './hamburgers.module.css'
 import Image from 'next/image'
 
 import { usePathname } from "next/navigation";
-// import logoImg from '/public/Logo.svg'
-import { BellElectric, BookUser, LogOutIcon } from 'lucide-react'
-import { deleteCookie } from 'cookies-next'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
-import { getCookiesClient } from '@/lib/cookieClient';
-import { api } from '@/app/services/api';
 import { useEffect, useState } from 'react';
 
 export function Header() {
-  const [user, setUser] = useState<any>(null);
-  const [urlUser, setUrlUser] = useState("");
-
-  const router = useRouter();
+  const [isactive, setIsactive] = useState(false);
 
   // Verifica se a rota é ativa
   const pathname = usePathname(); // Pega a rota ativa
   const isActive = (path: string) => pathname === path;
-
-  async function handleLogout() {
-    deleteCookie("session", { path: "/" })
-    toast.success("Logout feito com sucesso!")
-
-    router.replace("/")
-  }
-
-  useEffect(() => {
-    const token = getCookiesClient();
-
-    async function getUser() {
-      try {
-        const response = await api.get("/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUrlUser(response.data.profilePhoto);
-        setUser(response.data);
-      } catch (error) {
-        console.error("Erro ao carregar o usuário:", error);
-        handleLogout(); // Redireciona se houver erro
-      }
-    }
-
-    getUser();
-  }, []);
-
-  console.log(user)
 
   return (
     <header className={styles.headerContainer}>
@@ -59,21 +22,34 @@ export function Header() {
           <Image
             alt="Logo Sujeito Pizza"
             src={"/logo.svg"}
-            width={200}
-            height={54}
+            width={116}
+            height={70}
             priority={true}
             quality={100}
           />
         </Link>
 
-        <nav>
+        <button onClick={() => setIsactive(!isactive)} className={`${styless.hamburger} ${isactive ? styless.isactive : ""} ${styless.hamburgerspin} ${styles.btnnav}`}>
+          <div className={styless.hamburgerbox}>
+            <div className={styless.hamburgerinner}></div>
+          </div>
+        </button>
 
-          <Link className={isActive("/attendence") ? styles.active : styles.link} href="/attendence">
-            <p>Projetos</p>
+
+        <nav className={`${isactive ? styles.isactive : ""} ${styles.navmobi}`}>
+
+          <Link className={isActive("/attendence") ? styles.active : styles.link} href="/">
+            <p>Home</p>
           </Link>
 
           <Link className={isActive("/attendence") ? styles.active : styles.link} href="/attendence">
-            <p>Sobre</p>
+            <p>Contato</p>
+          </Link>
+        </nav>
+
+        <nav className={styles.nav}>
+          <Link className={isActive("/attendence") ? styles.active : styles.link} href="/">
+            <p>Home</p>
           </Link>
 
           <Link className={isActive("/attendence") ? styles.active : styles.link} href="/attendence">

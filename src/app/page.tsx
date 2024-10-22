@@ -52,6 +52,17 @@ export default function Home() {
                 
                 {loading ? user && <div className={styles.content}>
 
+                    <div className={styles.capas}>
+
+                        <div className={styles.capasitens}>
+                            {user.album.map((item: any) => <div className={styles.project}>
+                                <img src={item.campamini} className={styles.imgcapa} />
+                                <button className={styles.buttonOverlay} onClick={() => handleClick(item.id)}>Ver Mais</button>
+                            </div>)}
+
+                        </div>
+                    </div>
+
                     <div className={styles.sobre}>
                         <div className={styles.sobrecontainer}>
 
@@ -69,22 +80,11 @@ export default function Home() {
 
                             <div className={styles.capainfo}>
                                 <h2>
-                                    Me chamo Luciano (Graphic Design)
+                                    Me chamo Luciano
                                 </h2>
                                 <p>Ofereço oportunidades para empresas e marcas se destacarem no mercado de trabalho através do meu trabalho de design gráfico, onde em menos de 3 anos vivo desse serviço que tanto amo, trabalhando de casa e de maneira profissional, mesmo sem um diploma da área que atuo. Espero que goste de alguns dos vários trabalhos que já fiz e tendo interesse não deixe de me contatar.</p>
                                 <button>MAIS SOBRE MIM</button>
                             </div>
-                        </div>
-                    </div>
-
-                    <div className={styles.capas}>
-
-                        <div className={styles.capasitens}>
-                            {user.album.map((item: any) => <div className={styles.project}>
-                                <img src={item.campamini} className={styles.imgcapa} />
-                                <button className={styles.buttonOverlay} onClick={() => handleClick(item.id)}>Ver Mais</button>
-                            </div>)}
-
                         </div>
                     </div>
 

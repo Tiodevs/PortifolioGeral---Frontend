@@ -49,6 +49,35 @@ export default function Project({ params }: Props) {
         );
     }
 
+    async function handleDeleteFoto(foto_id: any) {
+    
+        await api.delete("/foto", {
+            params: {
+                foto_id: foto_id
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+            return
+        })
+    
+    }
+
+    async function handleDeleteAlbum(album_id: any) {
+    
+        await api.delete("/album", {
+            params: {
+                album_id: album_id
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+            return
+        })
+    
+    }
+
+    
     return (
         <div>
             <main className={styles.main}>
@@ -70,14 +99,14 @@ export default function Project({ params }: Props) {
                                 <div className={styles.btnsproject}>
                                     <a href={`/adm/addphoto/${item.id}`} className={styles.btn}>Adicionar foto</a>
                                     <a href="" className={styles.btn}>Editar album</a>
-                                    <a href="" className={styles.btn}>Deletar</a>
+                                    <a href="" className={styles.btn} onClick={() => handleDeleteAlbum(item.id)}>Deletar</a>
                                 </div>
 
                             </div>
                             <div className={styles.fotosproject}>
                                 {item.fotos.map((item:any) => <div className={styles.projectfotos}>
                                     <img src={item.foto} alt="" className={styles.imgfotos} />
-                                    <button className={styles.buttonOverlay}>Exluir</button>
+                                    <button className={styles.buttonOverlay} onClick={() => handleDeleteFoto(item.id)}>Exluir</button>
                                 </div>)}
                             </div>
                         </div>)}

@@ -1,63 +1,91 @@
-"use client"; // Habilita o componente do lado do cliente
+'use client'
 
 import styles from "./page.module.scss";
-import Image from "next/image";
-import Link from "next/link";
-import { toast } from "sonner";
-import { useState } from "react";import { handleRegister } from "../actions/serverActions";
-; // Importa a função do servidor
+import { Header } from "../components/header";
+import { useEffect, useState } from "react";
+import { api } from "../services/api";
+import { useRouter } from 'next/navigation';
 
-export default function Home() {
-  const [error, setError] = useState<string | null>(null); // Para capturar erros no cliente
+import { Form } from "../components/form";
 
-  async function onSubmit(formData: FormData) {
-    setError(null)
-    try {
-      console.log(formData)
-      await handleRegister(formData); // Chama a função do servidor
-      window.location.href = "/attendence";
-    } catch (err: any) {
-      setError("Login ou senha incorretos, tente novamente"); // Captura o erro e atualiza o estado
-      toast.warning(error);
+interface Props {
+    params: {
+        userId: string
     }
-  }
+}
 
-  return (
-    <>
-      <div className={styles.containerCenter}>
-        <Image
-          src={"/logo.svg"}
-          alt="Logo da empresa"
-          className={styles.logo}
-          width={306}
-          height={60}
-          priority
-        />
+export default function Project({ params }: Props) {
 
-        <section className={styles.login}>
-          <form action={onSubmit}>
-            <input
-              type="email"
-              required
-              name="email"
-              placeholder="Email"
-              className={styles.input}
-            />
+    const decodedId = decodeURIComponent(params.userId as string).trim()
 
-            <input
-              type="password"
-              required
-              name="password"
-              placeholder="Senha"
-              className={styles.input}
-            />
+    const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
 
-            <button type="submit">Entrar</button>
-          </form>
+    const router = useRouter();
 
-          {error ? <p className={styles.error}>{error}</p>: <></>}
-        </section>
-      </div>
-    </>
-  );
+    useEffect(() => {
+        async function getUser() {
+            try {
+                const response = await api.get("/users");
+
+                setUser(response.data[0]);
+
+                console.log(response.data[0])
+            } catch (error) {
+                console.error("Erro ao carregar o usuário:", error);
+            }
+        }
+
+        getUser();
+
+        setLoading(true)
+    }, [])
+
+    if (!loading) {
+        return (
+            <div className={styles.loaderContainer}>
+                <div className={styles.loader}></div>
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <main className={styles.main}>
+                {loading ? user && <Header /> : <></>}
+
+                {loading ? user && <div className={styles.content}>
+
+                    <div className={styles.header}>
+                        <h1>Painel de administrador</h1>
+                        <p>Configura sua plataforma aqui</p>
+                        <a href="" className={styles.btn}>CRIAR ALBUM</a>
+                    </div>
+
+                    <div className={styles.projcts}>
+
+                        {user.album.map((item: any) => <div className={styles.projct}>
+                            <div className={styles.headerproject}>
+                                <h1>{item.titulo}</h1>
+                                <div className={styles.btnsproject}>
+                                    <a href={`/adm/addphoto/${item.id}`} className={styles.btn}>Adicionar foto</a>
+                                    <a href="" className={styles.btn}>Editar album</a>
+                                    <a href="" className={styles.btn}>Deletar</a>
+                                </div>
+
+                            </div>
+                            <div className={styles.fotosproject}>
+                                {item.fotos.map((item:any) => <div className={styles.projectfotos}>
+                                    <img src={item.foto} alt="" className={styles.imgfotos} />
+                                    <button className={styles.buttonOverlay}>Exluir</button>
+                                </div>)}
+                            </div>
+                        </div>)}
+
+                    </div>
+
+                </div> : <></>}
+            </main >
+        </div >
+    );
 }

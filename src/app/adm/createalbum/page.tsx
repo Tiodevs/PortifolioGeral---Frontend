@@ -6,7 +6,7 @@ import { api } from "../../services/api";
 import { useRouter } from 'next/navigation'; // Importa o hook useRouter
 import { useState, ChangeEvent, FormEvent } from "react";
 
-export default function Signup() {
+export default function CreateAlbum() {
     const [image, setImage] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState("");
     const [loading, setLoading] = useState<boolean>(false);

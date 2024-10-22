@@ -88,7 +88,7 @@ export default function Project({ params }: Props) {
                     <div className={styles.header}>
                         <h1>Painel de administrador</h1>
                         <p>Configura sua plataforma aqui</p>
-                        <a href="" className={styles.btn}>CRIAR ALBUM</a>
+                        <a href="/adm/createalbum" className={styles.btn}>CRIAR ALBUM</a>
                     </div>
 
                     <div className={styles.projcts}>
@@ -98,7 +98,7 @@ export default function Project({ params }: Props) {
                                 <h1>{item.titulo}</h1>
                                 <div className={styles.btnsproject}>
                                     <a href={`/adm/addphoto/${item.id}`} className={styles.btn}>Adicionar foto</a>
-                                    <a href="" className={styles.btn}>Editar album</a>
+                                    <a href={`/adm/editalbum/${item.id}`} className={styles.btn}>Editar album</a>
                                     <a href="" className={styles.btn} onClick={() => handleDeleteAlbum(item.id)}>Deletar</a>
                                 </div>
 
